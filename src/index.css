@@ -465,7 +465,7 @@
   blockquote {
     padding: 0 0 0 1em;
     margin: 0 0 0 0.1em;
-    box-shadow: inset 5px 0 rgba(17, 17, 17, 0.3);
+    box-shadow: inset 5px 0 rgba(250, 204, 21, 0.7);
   }
 
   label {
