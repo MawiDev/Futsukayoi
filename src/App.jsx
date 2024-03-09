@@ -88,7 +88,7 @@ function App() {
               <div className="grid grid-cols-4 justify-items-center items-center">
                 <p className="text-xl font-medium">
                   {" "}
-                  <strong>Weight:</strong>{" "}
+                  <strong>Peso:</strong>{" "}
                 </p>
                 <span>{countWeight} Kg</span>
                 <button
@@ -122,7 +122,7 @@ function App() {
                 className="rotate-[-15deg]"
               />
               <strong className="text-xl text-center">
-                33 cl <br /> beer
+                33 cl <br /> Birra
               </strong>
               <div className="grid grid-cols-3 justify-items-center items-center">
                 <button
@@ -156,7 +156,7 @@ function App() {
                 className="rotate-[15deg]"
               />
               <strong className="text-xl text-center">
-                0,5 l <br /> beer
+                0,5 l <br /> Birra
               </strong>
               <div className="grid grid-cols-3 justify-items-center items-center">
                 <button
@@ -190,7 +190,7 @@ function App() {
                 className="rotate-[15deg]"
               />
               <strong className="text-xl text-center">
-                20 cl <br /> wine
+                20 cl <br /> Vino
               </strong>
               <div className="grid grid-cols-3 justify-items-center items-center">
                 <button
@@ -219,7 +219,7 @@ function App() {
             <div className="flex flex-col justify-center items-center bg-[whitesmoke] pt-3 pr-3 rounded-md shadow-md">
               <img src={amaro} alt="beer" width={100} />
               <strong className="text-xl text-center">
-                8 cl <br /> amaro
+                8 cl <br /> Amaro
               </strong>
               <div className="grid grid-cols-3 justify-items-center items-center">
                 <button
@@ -248,7 +248,7 @@ function App() {
             <div className="flex flex-col justify-center items-center bg-[whitesmoke] pt-3 pr-3 rounded-md shadow-md">
               <img src={liquore} alt="beer" width={100} />
               <strong className="text-xl text-center">
-                8 cl <br /> Liquor
+                8 cl <br /> Liquore
               </strong>
               <div className="grid grid-cols-3 justify-items-center items-center">
                 <button
