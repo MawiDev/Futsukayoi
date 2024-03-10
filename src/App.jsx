@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import Banner from "./components/Banner";
 
@@ -24,8 +24,33 @@ function App() {
   const [isClicked, setIsClicked] = useState(true);
   const [time, setTime] = useState("");
   const [alcool, setAlcol] = useState(0);
+  const [pesoAlc,setPesoAlc] = useState(0);
 
   const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (countWeight < 50) {
+      setPesoAlc(8);
+    } else if (countWeight > 55 && countWeight <= 60) {
+      setPesoAlc(9);
+    } else if (countWeight > 60 && countWeight <= 65) {
+      setPesoAlc(10);
+    } else if (countWeight > 65 && countWeight <= 70) {
+      setPesoAlc(11);
+    } else if (countWeight > 70 && countWeight <= 75) {
+      setPesoAlc(12);
+    } else if (countWeight > 75 && countWeight <= 80) {
+      setPesoAlc(13);
+    } else if (countWeight > 80 && countWeight <= 85) {
+      setPesoAlc(14);
+    } else if (countWeight > 85 && countWeight <= 90) {
+      setPesoAlc(15);
+    } else if (countWeight > 90 && countWeight <= 95) {
+      setPesoAlc(16);
+    } else {
+      setPesoAlc(17);
+    }
+  }, [countWeight]);
 
   const checkAlcol = () => {
     setIsClicked(false);
@@ -38,29 +63,29 @@ function App() {
     }, 100);
     
     //Bottiglia birra
-    const newCountBottleBeer = countBottleBeer * 0.331 * 0.05;
+    const newCountBottleBeer = countBottleBeer * 0.33 * 0.05;
     const gramAlcBottleBeer = newCountBottleBeer * 789;
-    const timeBottleBeer = gramAlcBottleBeer / 8;
+    const timeBottleBeer = gramAlcBottleBeer / pesoAlc;
     //Media birra
     const newCountBeer = countBeer * 0.501 * 0.07;
     const gramAlcBeer = newCountBeer * 789;
-    const timeBeer = gramAlcBeer / 8;
+    const timeBeer = gramAlcBeer / pesoAlc;
     //Calice vino
     const newCountWine = countWine * 0.251 * 0.15;
     const gramAlcWine = newCountWine * 789;
-    const timeWine = gramAlcWine / 8;
+    const timeWine = gramAlcWine / pesoAlc;
     //Bicchiere amaro
     const newCountAmaro = countAmaro * 0.081 * 0.35;
     const gramAlcAmaro = newCountAmaro * 789;
-    const timeAmaro = gramAlcAmaro / 8;
+    const timeAmaro = gramAlcAmaro / pesoAlc;
     //Bicchiere liquore
     const newCountLiquore = countLiquore * 0.081 * 0.5;
     const gramAlcLiquore = newCountLiquore * 789;
-    const timeLiquore = gramAlcLiquore / 8;
+    const timeLiquore = gramAlcLiquore / pesoAlc;
     //Cocktail
     const newCountCocktails = countCocktail * 0.201 * 0.375;
     const gramAlcCocktail = newCountCocktails * 789;
-    const timeCocktail = gramAlcCocktail / 8;
+    const timeCocktail = gramAlcCocktail / pesoAlc;
 
     // Calcola le ore e i minuti
     const totTime =
@@ -69,7 +94,7 @@ function App() {
       timeAmaro +
       timeLiquore +
       timeWine +
-      timeCocktail;
+      timeCocktail + 4;
     const hours = Math.floor(totTime);
     const minutes = Math.round((totTime - hours) * 60);
     const finalTime = `${hours} ora e ${minutes} minuti`;
@@ -96,14 +121,18 @@ function App() {
           <div className="h-screen bg-[#454545] text-white p-12 text-center">
             <h2 className="text-3xl xl:text-4xl">
               Nel corpo hai
-              <br /> <strong className="text-yellow-400">{alcool} g</strong>{" "}
+              <br /> <strong className="text-yellow-400">{alcool} g di alcol</strong>{" "}
             </h2>
             <h2 className="text-3xl xl:text-4xl">
               Tempo per smaltire
               <br /> <strong className="text-yellow-400">{time}</strong>{" "}
             </h2>
             <br />
+            <h2 className="text-3xl xl:text-4xl">Bevi tanta Acqua</h2>
+            <p className="text-lg md:text-xl md:leading-8"> L'alcol non idrata i tessuti che quindi si restringono causando pressione interna e, di conseguenza, mal di testa. Basta pensare che 10 grammi di alcol fanno produrre circa 100 ml di urina.</p>
             <br />
+            <br/>
+            <br/>
             <a
               href="/"
               className="text-[#454545] font-bold text-2xl md:text-3xl uppercase px-6 rounded-md bg-yellow-400 py-3"
