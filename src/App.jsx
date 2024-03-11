@@ -12,106 +12,49 @@ import cocktails from "./assets/cocktails.png";
 import Footer from "./components/Footer";
 import Cards from "./components/Cards";
 
+import { checkAlcol } from "./utils/functions";
+
 function App() {
-  const [countWeight, setCountWeight] = useState(60);
-
-  const [countBeer, setCountBeer] = useState(0);
-  const [countBottleBeer, setCountBottleBeer] = useState(0);
-  const [countWine, setCountWine] = useState(0);
-  const [countAmaro, setCountAmaro] = useState(0);
-  const [countLiquore, setCountLiquore] = useState(0);
-  const [countCocktail, setCountCocktail] = useState(0);
-
   const [isClicked, setIsClicked] = useState(true);
   const [time, setTime] = useState("");
   const [alcool, setAlcol] = useState(0);
   const [pesoAlc, setPesoAlc] = useState(0);
 
+  const [dati, setDati] = useState({
+    countWeight: 60,
+    countBottleBeer: 0,
+    countBeer: 0,
+    countWine: 0,
+    countAmaro: 0,
+    countLiquore: 0,
+    countCocktail: 0,
+  });
+
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    if (countWeight < 50) {
+    if (dati.countWeight < 50) {
       setPesoAlc(8);
-    } else if (countWeight > 55 && countWeight <= 60) {
+    } else if (dati.countWeight > 55 && dati.countWeight <= 60) {
       setPesoAlc(9);
-    } else if (countWeight > 60 && countWeight <= 65) {
+    } else if (dati.countWeight > 60 && dati.countWeight <= 65) {
       setPesoAlc(10);
-    } else if (countWeight > 65 && countWeight <= 70) {
+    } else if (dati.countWeight > 65 && dati.countWeight <= 70) {
       setPesoAlc(11);
-    } else if (countWeight > 70 && countWeight <= 75) {
+    } else if (dati.countWeight > 70 && dati.countWeight <= 75) {
       setPesoAlc(12);
-    } else if (countWeight > 75 && countWeight <= 80) {
+    } else if (dati.countWeight > 75 && dati.countWeight <= 80) {
       setPesoAlc(13);
-    } else if (countWeight > 80 && countWeight <= 85) {
+    } else if (dati.countWeight > 80 && dati.countWeight <= 85) {
       setPesoAlc(14);
-    } else if (countWeight > 85 && countWeight <= 90) {
+    } else if (dati.countWeight > 85 && dati.countWeight <= 90) {
       setPesoAlc(15);
-    } else if (countWeight > 90 && countWeight <= 95) {
+    } else if (dati.countWeight > 90 && dati.countWeight <= 95) {
       setPesoAlc(16);
     } else {
       setPesoAlc(17);
     }
-  }, [countWeight]);
-
-  const checkAlcol = () => {
-    setIsClicked(false);
-
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }, 100);
-
-    //Bottiglia birra
-    const newCountBottleBeer = countBottleBeer * 0.33 * 0.05;
-    const gramAlcBottleBeer = newCountBottleBeer * 789;
-    const timeBottleBeer = gramAlcBottleBeer / pesoAlc;
-    //Media birra
-    const newCountBeer = countBeer * 0.501 * 0.07;
-    const gramAlcBeer = newCountBeer * 789;
-    const timeBeer = gramAlcBeer / pesoAlc;
-    //Calice vino
-    const newCountWine = countWine * 0.251 * 0.15;
-    const gramAlcWine = newCountWine * 789;
-    const timeWine = gramAlcWine / pesoAlc;
-    //Bicchiere amaro
-    const newCountAmaro = countAmaro * 0.081 * 0.35;
-    const gramAlcAmaro = newCountAmaro * 789;
-    const timeAmaro = gramAlcAmaro / pesoAlc;
-    //Bicchiere liquore
-    const newCountLiquore = countLiquore * 0.081 * 0.5;
-    const gramAlcLiquore = newCountLiquore * 789;
-    const timeLiquore = gramAlcLiquore / pesoAlc;
-    //Cocktail
-    const newCountCocktails = countCocktail * 0.201 * 0.375;
-    const gramAlcCocktail = newCountCocktails * 789;
-    const timeCocktail = gramAlcCocktail / pesoAlc;
-
-    // Calcola le ore e i minuti
-    const totTime =
-      timeBottleBeer +
-      timeBeer +
-      timeAmaro +
-      timeLiquore +
-      timeWine +
-      timeCocktail +
-      4;
-    const hours = Math.floor(totTime);
-    const minutes = Math.round((totTime - hours) * 60);
-    const finalTime = `${hours} ora e ${minutes} minuti`;
-    setTime(finalTime);
-
-    const totGramAlc = (
-      gramAlcBottleBeer +
-      gramAlcBeer +
-      gramAlcWine +
-      gramAlcAmaro +
-      gramAlcLiquore +
-      gramAlcCocktail
-    ).toFixed(2);
-    setAlcol(totGramAlc);
-  };
+  }, [dati.countWeight]);
 
   return (
     <div ref={scrollRef}>
@@ -124,15 +67,19 @@ function App() {
             <div className="col-span-2 xl:col-span-4">
               <div className="grid grid-cols-4 justify-items-center items-center">
                 <p className="text-2xl font-medium md:text-3xl">
-                  {" "}
-                  <strong>Peso:</strong>{" "}
+                  <strong>Peso:</strong>
                 </p>
-                <span className="text-2xl md:text-3xl">{countWeight} Kg</span>
+                <span className="text-2xl md:text-3xl">
+                  {dati.countWeight} Kg
+                </span>
                 <button
                   className="text-yellow-300 bg-[#454545] md:text-2xl md:font-bold"
                   onClick={() => {
-                    if (countWeight > 0) {
-                      setCountWeight((prevCount) => prevCount - 1);
+                    if (dati.countWeight > 0) {
+                      setDati((prevDati) => ({
+                        ...prevDati,
+                        countWeight: prevDati.countWeight - 1,
+                      }));
                     }
                   }}
                 >
@@ -141,7 +88,12 @@ function App() {
                 <button
                   className="text-yellow-300 bg-[#454545] md:text-2xl md:font-bold"
                   onClick={() => {
-                    setCountWeight((prevCount) => prevCount + 1);
+                    if (dati.countWeight < 200) {
+                      setDati((prevDati) => ({
+                        ...prevDati,
+                        countWeight: prevDati.countWeight + 1,
+                      }));
+                    }
                   }}
                 >
                   +
@@ -153,13 +105,19 @@ function App() {
             {/* 33 cl beer */}
             <Cards
               buttonMin={() => {
-                if (countBottleBeer > 0) {
-                  setCountBottleBeer((prevCount) => prevCount - 1);
+                if (dati.countBottleBeer > 0) {
+                  setDati((prevDati) => ({
+                    ...prevDati,
+                    countBottleBeer: prevDati.countBottleBeer - 1,
+                  }));
                 }
               }}
-              span={countBottleBeer}
+              span={dati.countBottleBeer}
               buttonPlus={() => {
-                setCountBottleBeer((prevCount) => prevCount + 1);
+                setDati((prevDati) => ({
+                  ...prevDati,
+                  countBottleBeer: prevDati.countBottleBeer + 1,
+                }));
               }}
             >
               <img
@@ -177,13 +135,19 @@ function App() {
             {/* 50 cl beer */}
             <Cards
               buttonMin={() => {
-                if (countBeer > 0) {
-                  setCountBeer((prevCount) => prevCount - 1);
+                if (dati.countBeer > 0) {
+                  setDati((prevDati) => ({
+                    ...prevDati,
+                    countBeer: prevDati.countBeer - 1,
+                  }));
                 }
               }}
-              span={countBeer}
+              span={dati.countBeer}
               buttonPlus={() => {
-                setCountBeer((prevCount) => prevCount + 1);
+                setDati((prevDati) => ({
+                  ...prevDati,
+                  countBeer: prevDati.countBeer + 1,
+                }));
               }}
             >
               <img
@@ -201,13 +165,19 @@ function App() {
             {/* 20 cl vino */}
             <Cards
               buttonMin={() => {
-                if (countWine > 0) {
-                  setCountWine((prevCount) => prevCount - 1);
+                if (dati.countWine > 0) {
+                  setDati((prevDati) => ({
+                    ...prevDati,
+                    countWine: prevDati.countWine - 1,
+                  }));
                 }
               }}
-              span={countWine}
+              span={dati.countWine}
               buttonPlus={() => {
-                setCountWine((prevCount) => prevCount + 1);
+                setDati((prevDati) => ({
+                  ...prevDati,
+                  countWine: prevDati.countWine + 1,
+                }));
               }}
             >
               <img
@@ -225,13 +195,19 @@ function App() {
             {/* 8 cl amaro */}
             <Cards
               buttonMin={() => {
-                if (countAmaro > 0) {
-                  setCountAmaro((prevCount) => prevCount - 1);
+                if (dati.countAmaro > 0) {
+                  setDati((prevDati) => ({
+                    ...prevDati,
+                    countAmaro: prevDati.countAmaro - 1,
+                  }));
                 }
               }}
-              span={countAmaro}
+              span={dati.countAmaro}
               buttonPlus={() => {
-                setCountAmaro((prevCount) => prevCount + 1);
+                setDati((prevDati) => ({
+                  ...prevDati,
+                  countAmaro: prevDati.countAmaro + 1,
+                }));
               }}
             >
               <img
@@ -249,13 +225,19 @@ function App() {
             {/* 8 cl liquore */}
             <Cards
               buttonMin={() => {
-                if (countLiquore > 0) {
-                  setCountLiquore((prevCount) => prevCount - 1);
+                if (dati.countLiquore > 0) {
+                  setDati((prevDati) => ({
+                    ...prevDati,
+                    countLiquore: prevDati.countLiquore - 1,
+                  }));
                 }
               }}
-              span={countLiquore}
+              span={dati.countLiquore}
               buttonPlus={() => {
-                setCountLiquore((prevCount) => prevCount + 1);
+                setDati((prevDati) => ({
+                  ...prevDati,
+                  countLiquore: prevDati.countLiquore + 1,
+                }));
               }}
             >
               <img
@@ -273,13 +255,19 @@ function App() {
             {/*  cocktails */}
             <Cards
               buttonMin={() => {
-                if (countCocktail > 0) {
-                  setCountCocktail((prevCount) => prevCount - 1);
+                if (dati.countCocktail > 0) {
+                  setDati((prevDati) => ({
+                    ...prevDati,
+                    countCocktail: prevDati.countCocktail - 1,
+                  }));
                 }
               }}
-              span={countCocktail}
+              span={dati.countCocktail}
               buttonPlus={() => {
-                setCountCocktail((prevCount) => prevCount + 1);
+                setDati((prevDati) => ({
+                  ...prevDati,
+                  countCocktail: prevDati.countCocktail + 1,
+                }));
               }}
             >
               <img
@@ -297,7 +285,9 @@ function App() {
             {/* Button Calcola */}
             <div className="col-span-2 pt-3 xl:col-span-4">
               <button
-                onClick={checkAlcol}
+                onClick={() =>
+                  checkAlcol(setIsClicked, setTime, setAlcol, dati, pesoAlc)
+                }
                 className="bg-[#454545] text-yellow-300 font-bold text-2xl uppercase px-12 md:text-3xl md:py-4 py-3"
               >
                 Calcola
